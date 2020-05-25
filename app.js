@@ -21,7 +21,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp_final",{ 
+mongoose.connect("mongodb+srv://susancat:Just0904%21@cluster0-hcxb6.mongodb.net/test?retryWrites=true&w=majority",{ 
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -52,6 +52,7 @@ app.use(indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 
-app.listen(3000, function(){
-    console.log("YelpCamp has started");
-});
+// app.listen(3000, function(){
+//     console.log("YelpCamp has started");
+// });
+app.listen(process.env.PORT, process.env.IP);
