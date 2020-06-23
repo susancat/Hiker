@@ -2,45 +2,98 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Yelp Camp</p>
-            <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
+            <p class="lead"><a href="/campgrounds">Hiker!</a></p>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Location
+                            </a>
+                        </h4>
+
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
+                                cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
+                                vice lomo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Checklist
+                            </a>
+                        </h4>
+
+                        <div id="collapseTwo" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <h5><i class="fa fa-umbrella" aria-hidden="true"></i> Umbrella</h5>
+                                <h5><i class="fas fa-glasses"></i> Sunglass</h5>
+                                <h5><i class="fas fa-utensils"></i>   Food and Water</h5>
+                                <h5><i class="fas fa-prescription-bottle-alt"></i> First Aid</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Tips and Warning
+                            </a>
+                        </h4>
+                        <div id="collapseThree" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae amet laudantium, modi doloribus voluptas perferendis expedita temporibus ipsum quos labore rerum nihil nemo ea earum.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <!-- map -->
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
-                <img class="img-responsive" src="<%= campground.image%>" alt="">
+                <img class="img-responsive" src="<%= campground.image%>" alt="hiking trail">
                 <div class="caption-full">
-                    <h4 class="pull-right">$<%=campground.price %>/night</h4>
+                    <h4 class="pull-right">Difficulty level: <%= campground.level %></h4>
                     <h4><a><%= campground.name%></a></h4>
                     <p><%= campground.description%></p>
                     <p>
                         <em>Submitted By <%= campground.author.username %></em>
                     </p>
                 <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
-                    <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                    <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/edit"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  Edit</a>
                     <form id="del" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-xs btn-danger">Delete</button>
+                    <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Delete</button>
                     </form>
                 <% } %>
                 </div>
             </div>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <h4 class=""><i class="fa fa-comment" aria-hidden="true"></i> Comment</h4>
+                    </div>
+                    <div class="text-right">
+                        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="transform: translateY(1px);"></span> Add New Comment</a>
+                    </div>
                 </div>
+                
                 <hr>
                 <% campground.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-md-12">
                             <strong><%= comment.author.username %></strong>
-                            <span class="pull-right">10 days ago</span>
+                            <span class="pull-right"><%= new Date().toDateString() %></span>
                             <p><%= comment.text %></p>
                         <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                            <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                            <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  Edit</a>
                             <form id="del" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                 <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                             </form>
@@ -52,7 +105,5 @@
         </div>
     </div>
 </div>
-
-
 
 <%- include("../partials/footer") %>

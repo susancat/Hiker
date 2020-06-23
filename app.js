@@ -18,14 +18,27 @@ var commentRoutes = require("./routes/comments"),
 app.use(flash());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use('/static', express.static(__dirname+"/src"));
 app.use(methodOverride("_method"));
+app.use(function (req, res, next) {
+    res.status(404).send("Sorry can't find that!")
+})
 app.set("view engine", "ejs");
 
-mongoose.connect("mongodb+srv://susancat:Just0904%21@cluster0-hcxb6.mongodb.net/test?retryWrites=true&w=majority",{ 
+// mongoose.connect(process.env.DATABASEURL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false
+// });
+//for local db, set DABASEURL=mongodb://localhost:27017/yelp_camp_final
+//for online set config: DATABASEURL=mongodb+srv://susancat:Just0904%21@cluster0-hcxb6.mongodb.net/test?retryWrites=true&w=majority
+
+mongoose.connect("mongodb://localhost:27017/Hiker",{ 
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 });
+
 // seedDB();
 
 //passport configuration
@@ -52,7 +65,7 @@ app.use(indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 
-// app.listen(3000, function(){
-//     console.log("YelpCamp has started");
-// });
-app.listen(process.env.PORT, process.env.IP);
+app.listen(3000, function(){
+    console.log("Hiker has started");
+});
+// app.listen(process.env.PORT, process.env.IP);

@@ -18,13 +18,14 @@ router.get("/", function(req, res){
 //route principle: better to name the post page name the same with the above
 router.post("/", middleware.isLoggedIn, function(req, res){
     var name = req.body.name;
+    var level = req.body.level;
     var image = req.body.image;
     var des = req.body.des;
     var author = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, image: image, description: des, author: author};
+    var newCampground = {name: name, level: level, image: image, description: des, author: author};
     // create a new campground and save to DB
     Campground.create(newCampground, function(err, newly){
             if (err) {
