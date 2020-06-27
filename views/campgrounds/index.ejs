@@ -7,11 +7,11 @@
             <p>View our hand-picked hiking trails from all over the world</p>
             <div class="row">
                 <div class="col-md-3">
-                    <form action="/campgrounds/" method="GET">
+                    <form action="/campgrounds/" method="GET" class="form-inline">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="Search hiking trail">
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <button class="btn btn-primary" type="submit" value="search"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </span>
                     </div><!-- /input-group -->
                     </form>
@@ -23,6 +23,11 @@
         </div>
     </header>
     <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        <div class="col-md-12">
+            <% if(noMatch !== null) { %>
+                <h3><%= noMatch %></h3>
+            <% } %>
+        </div>
         <% campgrounds.forEach(function(campground){ %>
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">

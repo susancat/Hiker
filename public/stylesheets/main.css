@@ -1,6 +1,11 @@
 body {
     padding-top: 70px;
 }
+
+.flex-fill {
+    min-height:80vh;
+}
+
 /* make the body seperate with nav-top */
 .navbar {
     background-color: #2c3e50;

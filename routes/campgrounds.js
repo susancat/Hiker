@@ -4,15 +4,31 @@ var Campground = require("../models/campground");
 var middleware = require("../middleware");
 
 router.get("/", function(req, res){
+    if (req.query.search) {
+        var noMatch = null;
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Campground. find({name: regex}, function(err,allCampgrounds){
+            if(err){
+                console.log(err);
+            }else {
+                if(allCampgrounds.length < 1){
+                    noMatch = 'No trail match that query, please try again!';
+                }// console.log("found campgrounds");
+                res.render("./campgrounds/index", {campgrounds: allCampgrounds, noMatch: noMatch}); //if we want to pass any var, can add inside {}
+            }
+        });
+    } else { 
+        Campground. find({}, function(err,allCampgrounds){
+            if(err){
+                console.log(err);
+            }else {
+                // console.log("found campgrounds");
+                res.render("./campgrounds/index", {campgrounds: allCampgrounds, noMatch: noMatch}); //if we want to pass any var, can add inside {}
+            }
+        });
+    }
     //get all campgrounds from DB by find(), the following :campgrounds are not from params anymore
-    Campground. find({}, function(err,allCampgrounds){
-        if(err){
-            console.log(err);
-        }else {
-            // console.log("found campgrounds");
-            res.render("./campgrounds/index", {campgrounds: allCampgrounds}); //if we want to pass any var, can add inside {}
-        }
-    });
+    
 });
 
 //route principle: better to name the post page name the same with the above
@@ -84,6 +100,11 @@ router.delete("/:id", middleware.checkOwnership, function(req, res){
         }
     });
 });
+
+//fuzzy search in mongoDB
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
 

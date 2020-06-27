@@ -20,9 +20,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use('/static', express.static(__dirname+"/src"));
 app.use(methodOverride("_method"));
-app.use(function (req, res, next) {
-    res.status(404).send("Sorry can't find that!")
-})
+// app.use(function (req, res, next) {
+//     res.status(404).send("Sorry can't find that!")
+// })
 app.set("view engine", "ejs");
 
 // mongoose.connect(process.env.DATABASEURL, {
